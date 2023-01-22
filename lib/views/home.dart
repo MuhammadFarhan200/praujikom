@@ -180,7 +180,8 @@ class _HomePageState extends State<HomePage> {
                                           padding: const EdgeInsets.all(8),
                                           child: Text(
                                             dataSearch.ayat,
-                                            textDirection: TextDirection.rtl,                                            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                            textDirection: TextDirection.rtl,                                            
+                                            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                                           ),
                                         ),
                                         Padding(
