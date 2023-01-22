@@ -114,163 +114,161 @@ class _HomePageState extends State<HomePage> {
               ),
             ];
           },
-          body: loading ? const Center(child: CircularProgressIndicator(),) : Container(
-            padding: const EdgeInsets.only(left: 10, right: 10),
-            child: Column(
-              children: [
-                const Padding(
-                  padding: EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 5),
-                  child: Text(
-                    'Berikut adalah doa-doa yang sering dibacakan dikehidupan sehari-hari. Sudah hafal belum??',
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold,
-                    ),
+          body: loading ? const Center(child: CircularProgressIndicator()) : Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 5),
+                child: Text(
+                  'Berikut adalah doa-doa yang sering dibacakan dikehidupan sehari-hari. Sudah hafal belum??',
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold,
                   ),
                 ),
-                Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  margin: const EdgeInsets.all(10),
-                  elevation: 5,
-                  child: ListTile(
-                    leading: const Icon(Icons.search),
-                    title: TextField(
-                      controller: _controllerSearch,
-                      onChanged: onSearch,
-                      decoration: const InputDecoration(
-                        hintText: 'Search',
-                        border: InputBorder.none,
-                      ),
+              ),
+              Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                margin: const EdgeInsets.only(top: 10, right: 20, left: 20, bottom: 10),
+                elevation: 5,
+                child: ListTile(
+                  leading: const Icon(Icons.search),
+                  title: TextField(
+                    controller: _controllerSearch,
+                    onChanged: onSearch,
+                    decoration: const InputDecoration(
+                      hintText: 'Search',
+                      border: InputBorder.none,
                     ),
-                    trailing: IconButton(
-                        onPressed: () {
-                          _controllerSearch.clear();
-                          onSearch('');
+                  ),
+                  trailing: IconButton(
+                      onPressed: () {
+                        _controllerSearch.clear();
+                        onSearch('');
+                      },
+                      icon: const Icon(Icons.cancel)),
+                ),
+              ),
+              Expanded(
+                child: _search.isNotEmpty || _controllerSearch.text.isNotEmpty
+                    ? ListView.builder(
+                        padding: const EdgeInsets.all(20),
+                        itemCount: _search.length,
+                        itemBuilder: (context, index) {
+                          final dataSearch = _search[index];
+                          return Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            margin: const EdgeInsets.only(bottom: 15),
+                            elevation: 5,
+                            child: Theme(
+                              data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+                              child: ExpansionTile(
+                                textColor: const Color.fromRGBO(15, 1, 120, 1),
+                                iconColor: const Color.fromRGBO(15, 1, 120, 1),
+                                title: Text(
+                                  dataSearch.doa,
+                                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                ),
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.all(15),
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(8),
+                                          child: Text(
+                                            dataSearch.ayat,
+                                            textDirection: TextDirection.rtl,                                            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8),
+                                          child: Text(
+                                            dataSearch.latin,
+                                            textAlign: TextAlign.justify,
+                                            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8),
+                                          child: Text(
+                                            dataSearch.artinya,
+                                            textAlign: TextAlign.justify,
+                                            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
                         },
-                        icon: const Icon(Icons.cancel)),
-                  ),
-                ),
-                Expanded(
-                  child: _search.isNotEmpty || _controllerSearch.text.isNotEmpty
-                      ? ListView.builder(
-                          padding: const EdgeInsets.all(10),
-                          itemCount: _search.length,
-                          itemBuilder: (context, index) {
-                            final dataSearch = _search[index];
-                            return Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              margin: const EdgeInsets.only(bottom: 15),
-                              elevation: 5,
-                              child: Theme(
-                                data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-                                child: ExpansionTile(
-                                  textColor: const Color.fromRGBO(15, 1, 120, 1),
-                                  iconColor: const Color.fromRGBO(15, 1, 120, 1),
-                                  title: Text(
-                                    dataSearch.doa,
-                                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                                  ),
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.all(15),
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            padding: const EdgeInsets.all(8),
-                                            child: Text(
-                                              dataSearch.ayat,
-                                              textDirection: TextDirection.rtl,                                            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(8),
-                                            child: Text(
-                                              dataSearch.latin,
-                                              textAlign: TextAlign.justify,
-                                              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(8),
-                                            child: Text(
-                                              dataSearch.artinya,
-                                              textAlign: TextAlign.justify,
-                                              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
+                      )
+                    : ListView.builder(
+                        padding: const EdgeInsets.all(20),
+                        itemCount: _list.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          var dataDoa = _list[index];
+                          return Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            margin: const EdgeInsets.only(bottom: 15),
+                            elevation: 5,
+                            child: Theme(
+                              data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+                              child: ExpansionTile(
+                                textColor: const Color.fromRGBO(15, 1, 120, 1),
+                                iconColor: const Color.fromRGBO(15, 1, 120, 1),
+                                title: Text(
+                                  dataDoa.doa,
+                                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                                 ),
-                              ),
-                            );
-                          },
-                        )
-                      : ListView.builder(
-                          padding: const EdgeInsets.all(10),
-                          itemCount: _list.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            var dataDoa = _list[index];
-                            return Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              margin: const EdgeInsets.only(bottom: 15),
-                              elevation: 5,
-                              child: Theme(
-                                data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-                                child: ExpansionTile(
-                                  textColor: const Color.fromRGBO(15, 1, 120, 1),
-                                  iconColor: const Color.fromRGBO(15, 1, 120, 1),
-                                  title: Text(
-                                    dataDoa.doa,
-                                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                                  ),
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.all(15),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(8),
-                                            child: Text(
-                                              dataDoa.ayat,
-                                              textAlign: TextAlign.right,
-                                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                                            ),
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.all(15),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(8),
+                                          child: Text(
+                                            dataDoa.ayat,
+                                            textAlign: TextAlign.right,
+                                            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(8),
-                                            child: Text(
-                                              dataDoa.latin,
-                                              textAlign: TextAlign.justify,
-                                              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                                            ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8),
+                                          child: Text(
+                                            dataDoa.latin,
+                                            textAlign: TextAlign.justify,
+                                            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(8),
-                                            child: Text(
-                                              dataDoa.artinya,
-                                              textAlign: TextAlign.justify,
-                                              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-                                            ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8),
+                                          child: Text(
+                                            dataDoa.artinya,
+                                            textAlign: TextAlign.justify,
+                                            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                            );
-                          },
-                        ),
-                ),
-              ],
-            ),
+                            ),
+                          );
+                        },
+                      ),
+              ),
+            ],
           ),
         ),
       ),
